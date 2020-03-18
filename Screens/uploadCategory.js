@@ -17,9 +17,7 @@ const screenWidth = Dimensions.get('window').width;
 export default class UploadCategory extends Component {
   constructor(props) {
     super(props);
-
     this.categoryNameRef = React.createRef();
-
     this.state = {
       categoryName: '',
       modalVisible: false,
@@ -48,7 +46,7 @@ export default class UploadCategory extends Component {
 
       callApi({method: 'POST', url: ROUTES.CATEGORY_UPLOAD, data: data}).then(
         response => {
-          console.log('Data in catergory', response.data);
+          // console.log('Data in catergory', response.data);
 
           let c_status = response.data.status;
           this.setState({c_status: c_status});
@@ -65,7 +63,7 @@ export default class UploadCategory extends Component {
     }
   };
   render() {
-    console.log('Upload Category');
+    // console.log('Upload Category');
     return (
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}

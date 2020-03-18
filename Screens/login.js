@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import * as Storage from '../Utils/AsyncStorage';
 import {
   TextInput,
@@ -50,6 +51,7 @@ export default class Login extends Component {
     } else {
       Linking.addEventListener('url', this.handleOpenURL);
     }
+    SplashScreen.hide();
   }
 
   componentWillUnmount() {

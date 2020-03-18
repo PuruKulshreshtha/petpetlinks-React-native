@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {callApi, config} from '../Utils';
 import {get, findIndex} from 'lodash';
-const {ROUTES, SERVER_URL} = config;
+const {ROUTES} = config;
 import * as storage from '../Utils/AsyncStorage';
 
 import {
@@ -14,28 +14,22 @@ import {
   Dimensions,
   Image,
 } from 'react-native';
-import {NavigationEvents} from 'react-navigation';
+import Post from './post';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-export default class Verify extends Component {
+export default class Verify extends PureComponent {
   constructor(props) {
     super(props);
-
     this.state = {
-      arr: [1, 2, 3, 4, 5],
       content: [],
       contentCopy: [],
       ans: '',
       username: '----',
-      postCounts: 9,
-      imageHeight: 250,
-      imageWeidth: screenWidth * 0.9,
       modalVisible: false,
       selecteItem: {},
       skipCount: 0,
       limitCount: 2,
       hasMore: true,
-      initialLoaded: false,
     };
     this.monthMap = {
       0: 'Jan',
@@ -51,6 +45,7 @@ export default class Verify extends Component {
       10: 'Nov',
       11: 'Dec',
     };
+    this.count = 0;
   }
 
   toggleModal = item => {
@@ -66,26 +61,12 @@ export default class Verify extends Component {
       });
     }
   };
-  postCount = () => {
-    //console.log('Hello');
-    // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> pOst count ');
-    callApi({url: ROUTES.POST_COUNT, method: 'POST'}).then(response => {
-      //console.log('resp', response.data.count);
-      const count = response.data.count;
-      this.setState({postCounts: count});
-    });
-  };
+
   loadMore = async () => {
-    // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>Load more ');
     let postCounts = 0;
     let k = await callApi({url: ROUTES.POST_COUNT, method: 'POST'});
-    // .then(response => {
-    //   console.log('resp', response.data.count);
-    //   postCounts = response.data.count;
-    //   console.log('Hwy >>>>>>>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>>.', postCounts);
-    // });
     postCounts = k.data.count;
-    //console.log('Hwy >>>>>>>>>>>>>>>>>>>>>>>>>>.', postCounts);
+    // console.log('>>>>>>>>>>>>>>>>>>>>>>>.', postCounts);
     let {skipCount, limitCount} = this.state;
 
     let name = await storage.get('Name');
@@ -103,6 +84,7 @@ export default class Verify extends Component {
         response => {
           const content = response.data.dataFromDatabase;
 
+          // console.log('>>>>>>>..count', this.count++);
           // console.log('cpontent', content);
           let contentCopy = [...content];
           let ans = response.data.status;
@@ -265,7 +247,7 @@ export default class Verify extends Component {
                   ? this.loadMore
                   : () => console.log('ON end reached')
               }
-              onEndReachedThreshold={1}
+              onEndReachedThreshold={100}
               renderItem={({item}) => {
                 let date = new Date(item.time);
                 // console.log('>>>>>>>>>>>>> DATE TIME >>>>>>>>>>>>', item.time);
@@ -299,89 +281,13 @@ export default class Verify extends Component {
                 //console.log('Hello rajat ');
 
                 return (
-                  <View
-                    style={{
-                      backgroundColor: 'white',
-                      borderRadius: 20,
-                      margin: 10,
-                    }}>
-                    <View style={{flex: 1, flexDirection: 'row'}}>
-                      <Text
-                        style={{
-                          margin: 10,
-                          marginLeft: 15,
-                          fontSize: 14,
-                          fontWeight: 'bold',
-                          width: screenWidth * 0.4,
-                        }}>
-                        {item.title}
-                      </Text>
-                      <Text
-                        style={{
-                          margin: 10,
-                          marginLeft: screenWidth * 0.15,
-                          fontSize: 12,
-                          fontWeight: 'bold',
-                        }}>
-                        {requiredDateString}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        alignItems: 'center',
-                        alignContent: 'center',
-                      }}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.props.navigation.navigate(
-                            'SinglePost',
-                            item._id,
-                          );
-                        }}>
-                        <Image
-                          source={{
-                            uri: `${SERVER_URL}/${item.selectedFiles}`,
-                          }}
-                          style={{
-                            height: screenHeight * 0.3,
-                            borderRadius: 20,
-                            marginHorizontal: 10,
-                            width: screenWidth * 0.9,
-                            resizeMode: 'contain',
-                          }}></Image>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={{flex: 1, flexDirection: 'row'}}>
-                      <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => alert('Comming Soon')}>
-                        <Text>Share</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => {
-                          this.props.navigation.navigate(
-                            'SinglePost',
-                            item._id,
-                          );
-                        }}>
-                        <Text>{item.commentNo} Comment </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => this.Like(item._id)}>
-                        <Text>{item.like.length} Like</Text>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => this.toggleModal(item)}>
-                        <Text style={{width: 40, textAlign: 'center'}}>
-                          Info
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
+                  <Post
+                    requiredDateString={requiredDateString}
+                    item={item}
+                    navigate={this.props.navigation}
+                    Like={this.Like}
+                    toggleModal={this.toggleModal}
+                  />
                 );
               }}
             />
@@ -392,67 +298,11 @@ export default class Verify extends Component {
             <Text>Loading......</Text>
           </View>
         )}
-
-        {/* <View
-            style={{
-              backgroundColor: 'white',
-              borderRadius: 20,
-              margin: 20,
-              marginTop: 10,
-            }}>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Text style={{margin: 10, fontSize: 18, fontWeight: 'bold'}}>
-                TITLE
-              </Text>
-              <Text
-                style={{
-                  margin: 10,
-                  marginLeft: 200,
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                }}>
-                Date
-              </Text>
-            </View>
-            <Image
-              source={require('../Images/City6.jpg')}
-              style={{
-                height: 350,
-                borderRadius: 20,
-                margin: 10,
-                width: 300,
-              }}></Image>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => this.verify()}>
-                <Text>Share</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => this.verify()}>
-                <Text>4 Comment </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => this.verify()}>
-                <Text>0 Like</Text>
-              </TouchableOpacity>
-            </View>
-          </View> */}
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#ffa21d',
-    marginVertical: 10,
-    marginLeft: 10,
-    padding: 8,
-    borderRadius: 20,
-  },
   modalbutton: {
     alignItems: 'center',
     textAlign: 'center',
@@ -472,9 +322,7 @@ const styles = StyleSheet.create({
   input: {
     marginTop: 8,
     marginHorizontal: 20,
-
     fontSize: 18,
-
     borderBottomWidth: 2,
     borderBottomColor: '#ffa21d',
     color: 'white',

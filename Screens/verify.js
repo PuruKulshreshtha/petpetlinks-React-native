@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {emailCheck, callApi, config} from '../Utils';
-
+import {callApi, config} from '../Utils';
 const {ROUTES} = config;
-
 import {
   TouchableOpacity,
   StyleSheet,
