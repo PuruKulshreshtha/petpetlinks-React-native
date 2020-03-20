@@ -112,11 +112,20 @@ export default class UploadPost extends React.Component {
     return (
       <View style={styles.container}>
         <View>
+          <Text
+            style={{
+              color: '#ffa21d',
+              marginTop: 5,
+              fontSize: 50,
+              fontFamily: 'vincHand',
+            }}>
+            Upload Post
+          </Text>
           <TextInput
             style={styles.input}
             // keyboardType="email-address"
             placeholder="Enter the title"
-            placeholderTextColor="black"
+            placeholderTextColor="white"
             ref={this.titleRef}
             onChangeText={text => {
               // this.state =
@@ -132,10 +141,24 @@ export default class UploadPost extends React.Component {
           {this.state.error.title ? (
             <Text style={{color: 'red'}}>{this.state.error.title}</Text>
           ) : null}
-
+          <Text
+            style={{
+              color: 'white',
+              marginTop: 10,
+              fontSize: 20,
+              fontFamily: 'vincHand',
+            }}>
+            Please Select Category
+          </Text>
           <Picker
             selectedValue={this.state.categoryId}
-            style={{height: 50, width: 200}}
+            style={{
+              height: 50,
+              width: 200,
+              color: 'white',
+              marginVertical: 5,
+              backgroundColor: 'rgba(255,255,255,0.15)',
+            }}
             itemStyle={{fontSize: 20}}
             onValueChange={(itemValue, itemIndex) =>
               this.setState({categoryId: itemValue})
@@ -194,14 +217,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#ffa21d',
     padding: 10,
+    width: 150,
     borderRadius: 20,
-    margin: 20,
   },
   container: {
     flex: 1,
-
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,1)',
   },
   avatarContainer: {
     borderColor: '#ffa21d',
@@ -212,16 +234,14 @@ const styles = StyleSheet.create({
   },
   avatar: {
     width: screenWidth * 0.9,
-    margin: 20,
+    padding: 10,
     height: screenHeight * 0.5,
   },
   input: {
-    marginTop: 25,
-
-    fontSize: 20,
-
+    fontSize: 30,
     borderBottomWidth: 2,
     borderBottomColor: '#ffa21d',
-    color: 'black',
+    color: 'white',
+    fontFamily: 'vincHand',
   },
 });

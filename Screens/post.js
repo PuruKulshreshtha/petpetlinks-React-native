@@ -22,7 +22,7 @@ class Post extends PureComponent {
         style={{
           backgroundColor: 'white',
           borderRadius: 20,
-          margin: 10,
+          margin: 5,
         }}>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <Text

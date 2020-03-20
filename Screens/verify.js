@@ -44,7 +44,7 @@ export default class Verify extends Component {
       };
       callApi({method: 'POST', url: ROUTES.VERIFY, data: data}).then(
         response => {
-          console.log('REsponce ', response.data);
+          // console.log('REsponce ', response.data);
           const status = response.data.status;
           if (status === 'verified') {
             this.props.navigation.navigate('Login');
@@ -171,15 +171,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     margin: 20,
-  },
-  input: {
-    marginTop: 8,
-    marginHorizontal: 20,
-
-    fontSize: 18,
-
-    borderBottomWidth: 2,
-    borderBottomColor: '#ffa21d',
-    color: 'white',
   },
 });

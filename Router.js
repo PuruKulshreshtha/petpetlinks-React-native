@@ -11,7 +11,9 @@ import Logout from './Screens/logout';
 import SinglePost from './Screens/singlePost';
 import UploadCategory from './Screens/uploadCategory';
 import {DrawerItems, createDrawerNavigator} from 'react-navigation-drawer';
-
+import CustomDrawer from './Screens/component/customDrawer';
+import {Dimensions} from 'react-native';
+const screenWidth = Dimensions.get('window').width;
 const p = createStackNavigator(
   {
     Login: {
@@ -87,7 +89,6 @@ const AppNavigator = createStackNavigator(
     UploadCategory: {
       screen: UploadCategory,
       navigationOptions: {
-        headerShown: true,
         headerTitle: 'Upload Category',
       },
     },
@@ -99,25 +100,25 @@ const AppNavigator = createStackNavigator(
 
 const Drawer = createDrawerNavigator(
   {
-    Home: Timeline,
-    UploadPost: {
-      screen: UploadPost,
-      navigationOptions: {
-        title: 'Upload Post',
-      },
-    },
-    Verify: Verify,
-    Logout: {
-      screen: Logout,
-    },
-    SignUp: SignUp,
-    Login: Login,
-    UploadCategory: {
-      screen: UploadCategory,
-      navigationOptions: {
-        title: 'Upload Category ',
-      },
-    },
+    // Home: Timeline,
+    // UploadPost: {
+    //   screen: UploadPost,
+    //   navigationOptions: {
+    //     title: 'Upload Post',
+    //   },
+    // },
+    // Verify: Verify,
+    // Logout: {
+    //   screen: Logout,
+    // },
+    // SignUp: SignUp,
+    // Login: Login,
+    // UploadCategory: {
+    //   screen: UploadCategory,
+    //   navigationOptions: {
+    //     title: 'Upload Category ',
+    //   },
+    // },
     AppNavigator: {
       screen: AppNavigator,
       navigationOptions: {
@@ -128,9 +129,10 @@ const Drawer = createDrawerNavigator(
 
   {
     headerMode: 'float',
-    //intialRouteName: 'Login',
-    drawerBackgroundColor: 'rgba(255,255,255,0.98)',
-    //contentComponent:
+    // intialRouteName: 'Login',
+    //drawerBackgroundColor: 'rgba(255,255,255,0.98)',
+    contentComponent: CustomDrawer,
+    drawerWidth: screenWidth * 0.75,
   },
 );
 const SwitchNavigator = createSwitchNavigator(

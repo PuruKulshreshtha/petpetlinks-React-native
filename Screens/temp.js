@@ -431,8 +431,73 @@
 
 // export default Temp;
 
+//----------------------------------------------- timeline js
+// let requiredDateString = date.toString();
+// const imageHeight =
+//   item.dimensions.height / 6 < this.state.imageHeight
+//     ? this.state.imageHeight
+//     : item.dimensions.height / 6;
 
-Comment [{"__v": 0, "_id": "5e25a1cba7d5c53a4d0afeec", "comment": "pppp", "postId": "5e259bdaa7d5c53a4d0afeeb", "time": "2020-01-20T12:49:15.644Z", "userId": {"__v": 0, "_id": "5e1c184e832348359679cd87", "createdOn": "2020-01-13T07:12:14.446Z", "email": "rraghav127@gmail.com", "firstName": "", "lastName": "", "password": "r", "terms_condition": false, "username": "Rajat", "verified": true}}
+// const imageWidth =
+//   item.dimensions.width / 8 < this.state.imageWeidth
+//     ? this.state.imageWeidth
+//     : item.dimensions.width / 8;
+// console.log('>>>>>>>>>>>>>||||||', imageWidth);
+// let myUri = `http://192.168.100.175:8088/2020-1-20Colour8.jpg`;
+
+// Image.getSizeWithHeaders(
+//   'http://192.168.100.175:8088/2020-1-20Colour8.jpg',
+//   {},
+//   (width, height) => {
+//     console.log('HHHH', width, height);
+//     //this.setState({width, height});
+//   },
+//   () => {
+//     console.log('ERRRRR');
+//   },
+// );
+//console.log('Hello rajat ');
+
+//-----------------------------ghghghhg
+{
+  /* <NavigationEvents
+          onWillFocus={payload => {
+            this.setState(previousState => {
+              return {skipCount: 0};
+            });
+            this.postCount();
+            this.loadMore();
+          }}
+          // onWillFocus={payload => console.log('will focus', payload)}
+          // onDidFocus={payload => console.log('did focus', payload)}
+          // onWillBlur={payload => console.log('will blur', payload)}
+          // onDidBlur={payload => console.log('did blur', payload)}
+        /> */
+}
+
+//----------------------------
+
+Comment[
+  {
+    __v: 0,
+    _id: '5e25a1cba7d5c53a4d0afeec',
+    comment: 'pppp',
+    postId: '5e259bdaa7d5c53a4d0afeeb',
+    time: '2020-01-20T12:49:15.644Z',
+    userId: {
+      __v: 0,
+      _id: '5e1c184e832348359679cd87',
+      createdOn: '2020-01-13T07:12:14.446Z',
+      email: 'rraghav127@gmail.com',
+      firstName: '',
+      lastName: '',
+      password: 'r',
+      terms_condition: false,
+      username: 'Rajat',
+      verified: true,
+    },
+  }
+];
 // /dsfgkmhkglnj>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
 import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
