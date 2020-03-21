@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Image,
+  ScrollView,
   Picker,
   TextInput,
   Dimensions,
@@ -110,72 +111,73 @@ export default class UploadPost extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View>
-          <Text
-            style={{
-              color: '#ffa21d',
-              marginTop: 5,
-              fontSize: 50,
-              fontFamily: 'vincHand',
-            }}>
-            Upload Post
-          </Text>
-          <TextInput
-            style={styles.input}
-            // keyboardType="email-address"
-            placeholder="Enter the title"
-            placeholderTextColor="white"
-            ref={this.titleRef}
-            onChangeText={text => {
-              // this.state =
-              this.setState(previousState => {
-                return {
-                  title: text,
-                  error: {title: ''},
-                };
-              });
-            }}
-            //value={this.state.email}
-          />
-          {this.state.error.title ? (
-            <Text style={{color: 'red'}}>{this.state.error.title}</Text>
-          ) : null}
-          <Text
-            style={{
-              color: 'white',
-              marginTop: 10,
-              fontSize: 20,
-              fontFamily: 'vincHand',
-            }}>
-            Please Select Category
-          </Text>
-          <Picker
-            selectedValue={this.state.categoryId}
-            style={{
-              height: 50,
-              width: 200,
-              color: 'white',
-              marginVertical: 5,
-              backgroundColor: 'rgba(255,255,255,0.15)',
-            }}
-            itemStyle={{fontSize: 20}}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({categoryId: itemValue})
-            }>
-            {this.state.categoryArr.length > 0
-              ? this.state.categoryArr.map(data => {
-                  return (
-                    <Picker.Item
-                      key={data._id}
-                      label={data.category}
-                      value={data._id}
-                    />
-                  );
-                })
-              : null}
-          </Picker>
-          {/* <TextInput
+      <ScrollView style={{backgroundColor: 'black'}}>
+        <View style={styles.container}>
+          <View>
+            <Text
+              style={{
+                color: '#ffa21d',
+                marginTop: 5,
+                fontSize: 50,
+                fontFamily: 'vincHand',
+              }}>
+              Upload Post
+            </Text>
+            <TextInput
+              style={styles.input}
+              // keyboardType="email-address"
+              placeholder="Enter the title"
+              placeholderTextColor="white"
+              ref={this.titleRef}
+              onChangeText={text => {
+                // this.state =
+                this.setState(previousState => {
+                  return {
+                    title: text,
+                    error: {title: ''},
+                  };
+                });
+              }}
+              //value={this.state.email}
+            />
+            {this.state.error.title ? (
+              <Text style={{color: 'red'}}>{this.state.error.title}</Text>
+            ) : null}
+            <Text
+              style={{
+                color: 'white',
+                marginTop: 10,
+                fontSize: 20,
+                fontFamily: 'vincHand',
+              }}>
+              Please Select Category
+            </Text>
+            <Picker
+              selectedValue={this.state.categoryId}
+              style={{
+                height: 50,
+                width: 200,
+                color: 'white',
+                marginVertical: 5,
+                backgroundColor: 'rgba(255,255,255,0.15)',
+              }}
+              itemStyle={{fontSize: 20}}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({categoryId: itemValue})
+              }>
+              {this.state.categoryArr.length > 0
+                ? this.state.categoryArr.map(data => {
+                    return (
+                      <Picker.Item
+                        key={data._id}
+                        label={data.category}
+                        value={data._id}
+                      />
+                    );
+                  })
+                : null}
+            </Picker>
+            {/* <TextInput
             style={styles.input}
             placeholder="Enter the category "
             placeholderTextColor="black"
@@ -188,26 +190,31 @@ export default class UploadPost extends React.Component {
               });
             }}
           /> */}
-        </View>
-        <TouchableOpacity onPress={() => this.selectPhotoTapped()}>
-          <View
-            style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-            {this.state.Source === null ? (
-              <Text>Select a Photo</Text>
-            ) : (
-              <Image style={styles.avatar} source={this.state.Source} />
-            )}
           </View>
-        </TouchableOpacity>
-        {this.state.error.image ? (
-          <Text style={{color: 'red'}}>{this.state.error.image}</Text>
-        ) : null}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => this.uploadPost()}>
-          <Text>Upload </Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={() => this.selectPhotoTapped()}>
+            <View
+              style={[
+                styles.avatar,
+                styles.avatarContainer,
+                {marginBottom: 20},
+              ]}>
+              {this.state.Source === null ? (
+                <Text>Select a Photo</Text>
+              ) : (
+                <Image style={styles.avatar} source={this.state.Source} />
+              )}
+            </View>
+          </TouchableOpacity>
+          {this.state.error.image ? (
+            <Text style={{color: 'red'}}>{this.state.error.image}</Text>
+          ) : null}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.uploadPost()}>
+            <Text>Upload </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     );
   }
 }

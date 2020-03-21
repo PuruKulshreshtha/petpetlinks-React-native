@@ -1,27 +1,24 @@
 import React, {Component} from 'react';
 import * as storage from '../../Utils/AsyncStorage';
 import {get} from 'lodash';
-import {
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
-  ScrollView,
-  View,
-  Modal,
-  Image,
-  Linking,
-  Dimensions,
-  Text,
-} from 'react-native';
-// const screenWidth = Dimensions.get('window').width;
-// const screenHeight = Dimensions.get('window').height;
+import {TouchableOpacity, View, Image, Text, StyleSheet} from 'react-native';
 
 class CustomDrawer extends Component {
+  constructor(props) {
+    super(props);
+    this.data = [
+      {name: 'Home', component: 'Timeline'},
+      {name: 'Upload Post', component: 'UploadPost'},
+      {name: 'Upload Category', component: 'UploadCategory'},
+      {name: 'Logout', component: 'Logout'},
+    ];
+  }
+
   async componentDidMount() {
     let Id = await storage.get('Id');
     let Name = await storage.get('Name');
-    this.setState({Name});
+    let Email = await storage.get('email');
+    this.setState({Name, Email});
 
     if (Id === null) {
       this.props.navigation.navigate('Login');
@@ -37,16 +34,10 @@ class CustomDrawer extends Component {
         <View style={{alignItems: 'center'}}>
           <Image
             source={require('../../Images/profile.png')}
-            style={{
-              marginTop: 5,
-              height: 130,
-              borderRadius: 130,
-              width: 130,
-            }}></Image>
+            style={style.drawerImage}></Image>
           <Text
             style={{
-              fontSize: 30,
-              // marginTop: 10,
+              fontSize: 25,
               fontFamily: 'vincHand',
               color: '#ffa21d',
             }}>
@@ -58,15 +49,67 @@ class CustomDrawer extends Component {
             style={{
               fontSize: 18,
               marginTop: 10,
+              marginBottom: 10,
               color: 'white',
-              borderBottomWidth: 1,
             }}>
-            User-name :- {get(this.state, 'Name', 'Noname')}
+            User-name - {get(this.state, 'Name', 'Noname')}
           </Text>
+          <Text
+            style={{
+              fontSize: 18,
+              marginTop: 8,
+              marginBottom: 10,
+              color: 'white',
+            }}>
+            Email - {get(this.state, 'Email', 'No Email')}{' '}
+          </Text>
+          {this.data
+            ? this.data.map((data, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={style.drawerTouchable}
+                    onPress={() => {
+                      // console.log('>', this.data[0].component);
+                      {
+                        data.name === 'Home'
+                          ? this.props.navigation.closeDrawer()
+                          : this.props.navigation.navigate(data.component);
+                      }
+                      this.props.navigation.navigate(data.component);
+                    }}>
+                    <Text style={style.drawerText}>{data.name}</Text>
+                  </TouchableOpacity>
+                );
+              })
+            : void 0}
         </View>
       </View>
     );
   }
 }
-
+const style = StyleSheet.create({
+  drawerTouchable: {
+    marginTop: 5,
+    borderWidth: 1,
+    marginHorizontal: 2,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  drawerText: {
+    fontSize: 20,
+    color: 'white',
+    padding: 10,
+    marginRight: 5,
+  },
+  drawerImage: {
+    marginTop: 5,
+    height: 130,
+    borderRadius: 130,
+    width: 130,
+  },
+});
 export default CustomDrawer;
