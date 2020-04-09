@@ -1,5 +1,5 @@
 export default {
-  SERVER_URL: 'http://192.168.100.121:8088',
+  SERVER_URL: 'http://192.168.56.1:8088',
   ROUTES: {
     LOGIN: 'login',
     LIKE: 'time/like',

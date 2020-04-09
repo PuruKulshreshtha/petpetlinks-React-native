@@ -108,10 +108,10 @@ export default class Login extends Component {
             if (status === 'Login Success') {
               const data = response.data.dataFromDatabase[0];
               // console.log('Hello ', data._id);
-
               Storage.set('Id', data._id);
               Storage.set('Name', data.username);
               Storage.set('email', data.email);
+              Storage.set('ProfilePic', data.profilePic);
               //  this.storeData('Name', data.username);
               //  this.storeData('email', data.email);
               this.setState({email: '', password: ''});

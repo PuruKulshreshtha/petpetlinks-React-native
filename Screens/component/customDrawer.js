@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import * as storage from '../../Utils/AsyncStorage';
 import {get} from 'lodash';
 import {TouchableOpacity, View, Image, Text, StyleSheet} from 'react-native';
+import config from '../../Utils/config';
+const {SERVER_URL} = config;
 
 class CustomDrawer extends Component {
   constructor(props) {
@@ -18,13 +20,18 @@ class CustomDrawer extends Component {
     let Id = await storage.get('Id');
     let Name = await storage.get('Name');
     let Email = await storage.get('email');
-    this.setState({Name, Email});
+    let profilePic = await storage.get('ProfilePic');
+    // console.log(SERVER_URL, profilePic);
+
+    this.setState({Name, Email, profilePic});
 
     if (Id === null) {
       this.props.navigation.navigate('Login');
     }
   }
   render() {
+    // let {profilePic} = this.state;
+    // console.log(profilePic);
     return (
       <View
         style={{
@@ -33,7 +40,10 @@ class CustomDrawer extends Component {
         }}>
         <View style={{alignItems: 'center'}}>
           <Image
-            source={require('../../Images/profile.png')}
+            // source={require('../../Images/profile.png')}
+            source={{
+              uri: `${SERVER_URL}/${get(this.state, 'profilePic', '123.jpg')}`,
+            }}
             style={style.drawerImage}></Image>
           <Text
             style={{
